@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
-export const Form = () => {
-  const [newItemName, setNewItemName] = useState("");
-  console.log(newItemName);
 
+export const Form = ({ item }) => {
+  const [newItemName, setNewItemName] = useState("");
   const addNewItems = (e) => {
     e.preventDefault();
-    console.log(newItemName);
+    item(newItemName);
+    setNewItemName("");
   };
 
   const removeData = (id) => {
