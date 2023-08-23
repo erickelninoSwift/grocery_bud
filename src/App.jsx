@@ -40,15 +40,20 @@ const App = () => {
   };
 
   const setNewItem = (taskItem, check) => {
+    let getData = getLocalStorage();
     let findIndex = items.findIndex((data) => {
       return data.id === taskItem.id;
     });
-    console.log(findIndex);
-    console.log(taskItem);
-    console.log(check);
-    const updateData = [...items];
-    updateData[findIndex] = { ...updateData[findIndex], completed: check };
-    setItems(updateData);
+    getData[findIndex] = {
+      id: taskItem.id,
+      name: taskItem.name,
+      completed: check,
+    };
+    getData.map((data) => {
+      return data.id === getData[findIndex].id ? getData[findIndex] : data;
+    });
+
+    setlocalStorage(getData);
   };
 
   return (
