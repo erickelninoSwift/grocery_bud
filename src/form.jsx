@@ -5,8 +5,10 @@ export const Form = ({ item }) => {
   const [newItemName, setNewItemName] = useState("");
   const addNewItems = (e) => {
     e.preventDefault();
-    item(newItemName);
-    setNewItemName("");
+    if (newItemName) {
+      item(newItemName);
+      setNewItemName("");
+    }
   };
 
   const removeData = (id) => {
