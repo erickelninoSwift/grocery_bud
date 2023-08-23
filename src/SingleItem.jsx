@@ -2,24 +2,25 @@ import React from "react";
 import { useState } from "react";
 
 export const SingleItem = ({ taskItem, removeData, setMyNewItem }) => {
-  const [isChseck, setIsChecked] = useState(taskItem.completed);
+  const [isChecked, setIsChecked] = useState(taskItem.completed);
 
-  function toggle() {
-    setMyNewItem(taskItem, isChseck);
-  }
-  toggle();
   return (
     <article className="items">
       <div className="single-item">
         <input
           type="checkbox"
-          checked={isChseck}
-          onChange={() => setIsChecked((complete) => !complete)}
+          checked={isChecked}
+          onChange={() => {
+            return setIsChecked((complete) => {
+              setMyNewItem(taskItem, complete);
+              return !complete;
+            });
+          }}
         />
         <p
           className="single-item"
           style={
-            isChseck
+            isChecked
               ? { textDecoration: "line-through", textTransform: "capitalize" }
               : { textDecoration: "none", textTransform: "capitalize" }
           }

@@ -8,18 +8,23 @@ import { SingleItem } from "./SingleItem";
 const setlocalStorage = (newItesm) => {
   localStorage.setItem("list", JSON.stringify(newItesm));
 };
+
+const getLocalStorage = () => {
+  let list = localStorage.getItem("list");
+  if (list) {
+    list = JSON.parse(localStorage.getItem("list"));
+  } else {
+    list = [];
+  }
+  return list;
+};
+
 const App = () => {
-  const [items, setItems] = useState(JSON.parse(localStorage.getItem("list")));
+  const [items, setItems] = useState(getLocalStorage());
 
   const addItem = (itemName) => {
     let id = uuidv4();
-
-    let itemObject = {
-      id: id,
-      name: itemName,
-      completed: false,
-    };
-
+    let itemObject = { id: id, name: itemName, completed: false };
     const newItems = [...items, itemObject];
     setItems(newItems);
     toast.success("date was saved!");
@@ -35,16 +40,15 @@ const App = () => {
   };
 
   const setNewItem = (taskItem, check) => {
+    let findIndex = items.findIndex((data) => {
+      return data.id === taskItem.id;
+    });
+    console.log(findIndex);
     console.log(taskItem);
     console.log(check);
-    // let findIndex = items.findIndex((data) => {
-    //   return data.id === taskItem.id;
-    // });
-    // if (findIndex !== -1) {
-    //   const updateData = [...items];
-    //   updateData[findIndex] = { ...updateData[findIndex], completed: check };
-    //   setItems(updateData);
-    // }
+    const updateData = [...items];
+    updateData[findIndex] = { ...updateData[findIndex], completed: check };
+    setItems(updateData);
   };
 
   return (
